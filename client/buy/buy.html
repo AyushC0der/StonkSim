@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>BUY STONK</h1>
+    <p>Stonk Name: </p>
+    <input type="text" id="buyStockNameID"><br>
+    <p>Qnty: </p>
+    <input type="number" id="buyNumberID">
+    <button id="buyButtID">BUY ME</button>
+
+    <h1>SELL STONK</h1>
+    <p>Stonk Name: </p>
+    <input type="text" id="sellStockNameID"><br>
+    <p>Qnty: </p>
+    <input type="number" id="sellNumberID">
+    <button id="sellButtID">SELL ME</button>
+
+    <script>
+        const buybtn = document.getElementById("buyButtID");
+        const sellbtn = document.getElementById("sellButtID");
+        
+
+        buybtn.addEventListener("click", function () {
+            const num = Number(document.getElementById("buyNumberID").value);
+            const stockNm = document.getElementById("buyStockNameID").value;
+            if (num > 0 && Number.isInteger(num)) {
+                sendBuyRequest(num, stockNm);
+            } else {
+                alert("YOU IDIOT");
+            }
+        });
+        sellbtn.addEventListener("click", function () {
+            const num = Number(document.getElementById("sellNumberID").value);
+            const stockNm = document.getElementById("sellStockNameID").value;
+            if (num > 0 && Number.isInteger(num)) {
+                sendSellRequest(num, stockNm);
+            } else {
+                alert("YOU IDIOT");
+            }
+        });
+
+        async function sendBuyRequest(numQnt, stockName) {
+            const payload = {
+                action: "buy",
+                quantity: numQnt,
+                stock: stockName
+            };
+
+            await fetch("http://localhost:3000/trade", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            });
+        }
+
+        async function sendSellRequest(numQnt, stockName) {
+            const payload = {
+                action: "sell",
+                quantity: numQnt,
+                stock: stockName
+            };
+
+            await fetch("http://localhost:3000/trade", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            });
+        }
+
+    </script>
+</body>
+</html>
