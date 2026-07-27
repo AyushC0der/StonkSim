@@ -1,6 +1,6 @@
 import express from 'express';
 import stock from './market/market.js'
-import user from './user/user.js'
+import { displayUser, HoldingValue } from './user/user.js'
 import {buyStock, sellStock} from './services/trading.js'
 //import output from './services/trading.js'
 
@@ -12,22 +12,19 @@ const port = 3000;
 app.use(express.json());
 
 app.get('/', (req, res) => {
-    res.send('WELCOME TO MY stock APP!');
-    
+    res.send('WELCOME TO MY stock APP!');    
 });
 app.get('/stock', (req, res) => {
     res.send(stock);
-    
 });
 
 app.get('/user', (req, res) => {
-    res.send(user);
+    res.json(displayUser());
     
 });
 
 app.get('/trade', (req, res) => {
     res.sendFile(buyFile);
-    //res.send(output);
 
 });
 app.post('/trade', (req, res) =>{
@@ -57,6 +54,12 @@ app.get('/portfolio', (req, res) =>{
 app.get('/history', (req, res) =>{
     res.send(user.transaction);
 });
+
+app.get('/holding', (req, res) => {
+    res.send();
+});
+
+
 
 app.listen(port, () => {
     console.log(`listening on port ${port}`);
