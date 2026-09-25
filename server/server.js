@@ -1,6 +1,6 @@
 import express from 'express';
 import stock from './market/market.js'
-import { displayUser, HoldingValue } from './user/user.js'
+import user, { displayUser, HoldingValue } from './user/user.js'
 import {buyStock, sellStock} from './services/trading.js'
 //import output from './services/trading.js'
 
@@ -58,8 +58,6 @@ app.get('/history', (req, res) =>{
 app.get('/holding', (req, res) => {
     res.send();
 });
-
-
 
 app.listen(port, () => {
     console.log(`listening on port ${port}`);
